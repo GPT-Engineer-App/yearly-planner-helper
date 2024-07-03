@@ -13,95 +13,59 @@ export function SupabaseProvider({ children }) {
 
 const fromSupabase = async (query) => {
     const { data, error } = await query;
-    if (error) {
-        console.error("Error loading data from Supabase:", error.message);
-        throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
     return data;
 };
 
-// Hooks for event table
+/* supabase integration types
 
-export const useEvents = () => useQuery({
-    queryKey: ['events'],
-    queryFn: () => fromSupabase(supabase.from('events').select('*')),
-});
+// EXAMPLE TYPES SECTION
+// DO NOT USE TYPESCRIPT
 
-export const useEvent = (id) => useQuery({
-    queryKey: ['event', id],
-    queryFn: () => fromSupabase(supabase.from('events').select('*').eq('id', id).single()),
-});
+### foos
 
-export const useAddEvent = () => {
+| name    | type | format | required |
+|---------|------|--------|----------|
+| id      | int8 | number | true     |
+| title   | text | string | true     |
+| date    | date | string | true     |
+
+### bars
+
+| name    | type | format | required |
+|---------|------|--------|----------|
+| id      | int8 | number | true     |
+| foo_id  | int8 | number | true     |  // foreign key to foos
+	
+*/
+
+// Example hook for models
+
+export const useFoo = ()=> useQuery({
+    queryKey: ['foos'],
+    queryFn: fromSupabase(supabase.from('foos')),
+})
+export const useAddFoo = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newEvent) => fromSupabase(supabase.from('events').insert([newEvent])),
-        onSuccess: () => {
-            queryClient.invalidateQueries('events');
+        mutationFn: (newFoo)=> fromSupabase(supabase.from('foos').insert([{ title: newFoo.title }])),
+        onSuccess: ()=> {
+            queryClient.invalidateQueries('foos');
         },
     });
 };
 
-export const useUpdateEvent = () => {
+export const useBar = ()=> useQuery({
+    queryKey: ['bars'],
+    queryFn: fromSupabase(supabase.from('bars')),
+})
+export const useAddBar = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (updatedEvent) => fromSupabase(supabase.from('events').update(updatedEvent).eq('id', updatedEvent.id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('events');
-            queryClient.invalidateQueries(['event', updatedEvent.id]);
+        mutationFn: (newBar)=> fromSupabase(supabase.from('bars').insert([{ foo_id: newBar.foo_id }])),
+        onSuccess: ()=> {
+            queryClient.invalidateQueries('bars');
         },
     });
 };
 
-export const useDeleteEvent = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('events').delete().eq('id', id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('events');
-        },
-    });
-};
-
-// Hooks for categories table
-
-export const useCategories = () => useQuery({
-    queryKey: ['categories'],
-    queryFn: () => fromSupabase(supabase.from('categories').select('*')),
-});
-
-export const useCategory = (id) => useQuery({
-    queryKey: ['category', id],
-    queryFn: () => fromSupabase(supabase.from('categories').select('*').eq('id', id).single()),
-});
-
-export const useAddCategory = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (newCategory) => fromSupabase(supabase.from('categories').insert([newCategory])),
-        onSuccess: () => {
-            queryClient.invalidateQueries('categories');
-        },
-    });
-};
-
-export const useUpdateCategory = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (updatedCategory) => fromSupabase(supabase.from('categories').update(updatedCategory).eq('id', updatedCategory.id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('categories');
-            queryClient.invalidateQueries(['category', updatedCategory.id]);
-        },
-    });
-};
-
-export const useDeleteCategory = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('categories').delete().eq('id', id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('categories');
-        },
-    });
-};
