@@ -62,3 +62,46 @@ export const useDeleteEvent = () => {
         },
     });
 };
+
+// Hooks for categories table
+
+export const useCategories = () => useQuery({
+    queryKey: ['categories'],
+    queryFn: () => fromSupabase(supabase.from('categories').select('*')),
+});
+
+export const useCategory = (id) => useQuery({
+    queryKey: ['category', id],
+    queryFn: () => fromSupabase(supabase.from('categories').select('*').eq('id', id).single()),
+});
+
+export const useAddCategory = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newCategory) => fromSupabase(supabase.from('categories').insert([newCategory])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('categories');
+        },
+    });
+};
+
+export const useUpdateCategory = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedCategory) => fromSupabase(supabase.from('categories').update(updatedCategory).eq('id', updatedCategory.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('categories');
+            queryClient.invalidateQueries(['category', updatedCategory.id]);
+        },
+    });
+};
+
+export const useDeleteCategory = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('categories').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('categories');
+        },
+    });
+};
