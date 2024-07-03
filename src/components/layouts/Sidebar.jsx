@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <Flex direction="column" h="100vh" w="250px" bg="gray.800" color="white" p={4}>
       <Box mb={8}>
-        <Text fontSize="2xl" fontWeight="bold">Event Manager</Text>
+        <Text fontSize="2xl" fontWeight="bold">Planner App</Text>
       </Box>
       <VStack spacing={4} align="stretch">
         <Link to="/">
@@ -30,7 +30,7 @@ const SidebarLayout = ({ children }) => {
   return (
     <Flex direction="column" minH="100vh">
       <Box bg="gray.800" color="white" p={4}>
-        <Heading size="md">Event Manager</Heading>
+        <Heading size="md">Planner App</Heading>
       </Box>
       <Flex flex="1">
         <Sidebar />
@@ -39,7 +39,7 @@ const SidebarLayout = ({ children }) => {
         </Box>
       </Flex>
       <Box bg="gray.800" color="white" p={4} mt="auto">
-        <Text textAlign="center">© 2023 Event Manager</Text>
+        <Text textAlign="center">© 2023 Planner App</Text>
       </Box>
     </Flex>
   );

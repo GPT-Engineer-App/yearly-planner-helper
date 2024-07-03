@@ -22,7 +22,7 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
-        <Text fontSize="2xl">Category Manager</Text>
+        <Text fontSize="2xl">Yearly Planner</Text>
         <Box>
           <SimpleGrid columns={4} spacing={4}>
             {Array.from({ length: 12 }).map((_, index) => (
@@ -33,7 +33,7 @@ const Index = () => {
           </SimpleGrid>
         </Box>
         <Box>
-          {events.map(event => (
+          {events && events.map(event => (
             <Text key={event.id}>{event.name} - {event.date}</Text>
           ))}
         </Box>
