@@ -14,7 +14,7 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
-        <Text fontSize="2xl">Yearly Planner</Text>
+        <Text fontSize="2xl">Life Planner</Text>
         <Box>
           {/* Placeholder for the calendar grid */}
           <Button onClick={() => handleDayClick(new Date())}>Click a Day</Button>
