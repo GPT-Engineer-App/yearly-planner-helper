@@ -1,18 +1,26 @@
-// Update this page (the content is just a fallback if you fail and example)
-// Use chakra-ui
-import { Container, Text, VStack } from "@chakra-ui/react";
-
-// Example of using react-icons
-// import { FaRocket } from "react-icons/fa";
-// <IconButton aria-label="Add" icon={<FaRocket />} size="lg" />; // IconButton would also have to be imported from chakra
+import { Container, Text, VStack, Box, Button, useDisclosure } from "@chakra-ui/react";
+import { useState } from "react";
+import EventModal from "../components/EventModal";
 
 const Index = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleDayClick = (date) => {
+    setSelectedDate(date);
+    onOpen();
+  };
+
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <VStack spacing={4}>
-        <Text fontSize="2xl">Your Blank Canvas</Text>
-        <Text>Chat with the agent to start making edits.</Text>
+        <Text fontSize="2xl">Yearly Planner</Text>
+        <Box>
+          {/* Placeholder for the calendar grid */}
+          <Button onClick={() => handleDayClick(new Date())}>Click a Day</Button>
+        </Box>
       </VStack>
+      <EventModal isOpen={isOpen} onClose={onClose} date={selectedDate} />
     </Container>
   );
 };
