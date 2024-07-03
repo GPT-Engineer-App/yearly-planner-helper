@@ -1,4 +1,4 @@
-import { Container, Text, VStack, Box, Button, useDisclosure } from "@chakra-ui/react";
+import { Container, Text, VStack, Box, Button, useDisclosure, SimpleGrid, GridItem } from "@chakra-ui/react";
 import { useState } from "react";
 import EventModal from "../components/EventModal";
 import { useEvents } from "../integrations/supabase/index.js";
@@ -24,8 +24,13 @@ const Index = () => {
       <VStack spacing={4}>
         <Text fontSize="2xl">Category Manager</Text>
         <Box>
-          {/* Placeholder for the calendar grid */}
-          <Button onClick={() => handleDayClick(new Date())}>Click a Day</Button>
+          <SimpleGrid columns={4} spacing={4}>
+            {Array.from({ length: 12 }).map((_, index) => (
+              <GridItem key={index} w="100%" h="150px" bg="gray.200" onClick={() => handleDayClick(new Date(2023, index, 1))}>
+                <Text>{new Date(2023, index).toLocaleString('default', { month: 'long' })}</Text>
+              </GridItem>
+            ))}
+          </SimpleGrid>
         </Box>
         <Box>
           {events.map(event => (

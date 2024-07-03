@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, VStack, Text } from "@chakra-ui/react";
+import { Box, Flex, IconButton, VStack, Text, Heading, Spacer } from "@chakra-ui/react";
 import { FaCalendarAlt, FaLayerGroup } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -28,10 +28,18 @@ const Sidebar = () => {
 
 const SidebarLayout = ({ children }) => {
   return (
-    <Flex>
-      <Sidebar />
-      <Box flex="1" p={4} className="main-content">
-        {children}
+    <Flex direction="column" minH="100vh">
+      <Box bg="gray.800" color="white" p={4}>
+        <Heading size="md">Event Manager</Heading>
+      </Box>
+      <Flex flex="1">
+        <Sidebar />
+        <Box flex="1" p={4} className="main-content">
+          {children}
+        </Box>
+      </Flex>
+      <Box bg="gray.800" color="white" p={4} mt="auto">
+        <Text textAlign="center">© 2023 Event Manager</Text>
       </Box>
     </Flex>
   );
