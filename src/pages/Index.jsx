@@ -17,7 +17,7 @@ const Index = () => {
   };
 
   if (isLoading) return <Text>Loading...</Text>;
-  if (error) return <Text>Error loading events</Text>;
+  if (error) return <Text>Error loading events: {error.message}</Text>;
 
   return (
     <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
