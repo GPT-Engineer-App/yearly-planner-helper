@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <Flex direction="column" h="100vh" w="250px" bg="gray.800" color="white" p={4}>
       <Box mb={8}>
-        <Text fontSize="2xl" fontWeight="bold">Life Planner</Text>
+        <Text fontSize="2xl" fontWeight="bold">Category Manager</Text>
       </Box>
       <VStack spacing={4} align="stretch">
         <Link to="/">
